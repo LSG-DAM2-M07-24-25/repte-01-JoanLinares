@@ -85,7 +85,8 @@ fun Main() {
     var selectedIcon by remember { mutableStateOf<@Composable (() -> Unit)?>(null) }
     var min by remember { mutableIntStateOf(1) }
     var max by remember { mutableIntStateOf(10) }
-    var sliderValue by remember { mutableStateOf(min.toFloat()) } // Valor actual del Slider
+    var sliderValue by remember { mutableStateOf(min.toFloat()) }
+    var showResult by remember { mutableStateOf(false) }
 
     val icons = listOf(
         Icons.Default.Add,
@@ -211,15 +212,7 @@ fun Main() {
         ) {
             Button(
                 onClick = {
-                    selectedIcon = {
-                        if (selectedOption != "Selecciona un icono") {
-                            Icon(
-                                imageVector = icons.firstOrNull { it.name == selectedOption } ?: Icons.Default.Add,
-                                contentDescription = null,
-                                tint = Color.Yellow
-                            )
-                        }
-                    }
+                    showResult = true
                 },
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
@@ -235,7 +228,7 @@ fun Main() {
                 .padding(vertical = 16.dp)
         )
 
-        if (selectedIcon != null) {
+        if (showResult && selectedIcon != null) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
